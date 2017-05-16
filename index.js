@@ -5,12 +5,16 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const app = express();
 const router = require('./router');
+const config = require('./config');
+const cors = require('cors');
 
+const mongoURL = 'mongodb://' + config.mongoUsername + ':'+ config.mongoPassword + '@ds143131.mlab.com:43131/prosdevlab-service';
 //DB
-mongoose.connect('mongodb://localhost:auth/auth');
+mongoose.connect(mongoURL);
 
 //App Set up
 app.use(morgan('combined'));
+app.use(cors());
 app.use(bodyParser.json({type: '*/*'}));
 router(app);
 
