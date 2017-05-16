@@ -5,7 +5,10 @@ const User = require('../models/user');
 const config = require('../config');
 
 //Set up options for JWT Strategies
-const jwtOptions = {};
+const jwtOptions = {
+    jwtFromRequest : ExtractJwt.fromHeader('authorization'),
+    secretOrKey: config.secret
+};
 
 //Create JWT Strategy
 const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
@@ -24,3 +27,4 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
 });
 
 //Tell Passport to use strategy
+passport.use(jwtLogin);
